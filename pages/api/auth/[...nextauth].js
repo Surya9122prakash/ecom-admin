@@ -1,7 +1,5 @@
-import clientPromise from '@/lib/mongodb'
-import { MongoDBAdapter } from '@auth/mongodb-adapter'
-import NextAuth from 'next-auth'
-import GoogleProvider from 'next-auth/providers/google'
+import NextAuth from 'next-auth';
+import GoogleProvider from 'next-auth/providers/google';
 
 export default NextAuth({
   providers: [
@@ -10,24 +8,24 @@ export default NextAuth({
       clientSecret: process.env.GOOGLE_SECRET,
     })
   ],
-  adapter: MongoDBAdapter(clientPromise),
-  debug: true, // Enable debug logging
+  // Optional debug mode
+  debug: true,
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
-      console.log('Sign In:', { user, account, profile, email, credentials })
-      return true
+      console.log('Sign In:', { user, account, profile, email, credentials });
+      return true;
     },
     async redirect({ url, baseUrl }) {
-      console.log('Redirect:', { url, baseUrl })
-      return baseUrl
+      console.log('Redirect:', { url, baseUrl });
+      return baseUrl;
     },
     async session({ session, token, user }) {
-      console.log('Session:', { session, token, user })
-      return session
+      console.log('Session:', { session, token, user });
+      return session;
     },
     async jwt({ token, user, account, profile, isNewUser }) {
-      console.log('JWT:', { token, user, account, profile, isNewUser })
-      return token
+      console.log('JWT:', { token, user, account, profile, isNewUser });
+      return token;
     }
   }
-})
+});
